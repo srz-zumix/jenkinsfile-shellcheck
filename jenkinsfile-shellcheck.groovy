@@ -25,7 +25,7 @@ class JenkinsfileShellcheck {
         def shellcheck_opts = ""
         if( through_index >= 0 ) {
             shellcheck_opts = args[through_index+1..args.size()-1].join(" ")
-            args = args.drop(args.size()-through_index)
+            args = args[0..through_index-1]
         }
         def options = cli.parse(args)
 
