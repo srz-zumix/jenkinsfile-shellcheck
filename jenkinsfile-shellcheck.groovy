@@ -23,9 +23,9 @@ class JenkinsfileShellcheck {
             """
         def through_index = args.findIndexOf { it == '--' }
         def shellcheck_opts = ""
-        if( through_index > 0 ) {
-            shellcheck_opts = args.drop(args.size()-through_index).join(" ")
-            args = args[0..through_index-1]
+        if( through_index >= 0 ) {
+            shellcheck_opts = args[through_index+1..args.size()-1].join(" ")
+            args = args.drop(args.size()-through_index)
         }
         def options = cli.parse(args)
 
