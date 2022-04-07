@@ -8,3 +8,10 @@ help: ## Display this help screen
 
 run:
 	groovy jenkinsfile-shellcheck.groovy -- -f gcc
+
+test:
+	git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached | \
+		xargs -I{} groovy jenkinsfile-shellcheck.groovy -i {} -- -f gcc
+
+docker-build:
+	docker build -t jenkinsfile-shellcheck .

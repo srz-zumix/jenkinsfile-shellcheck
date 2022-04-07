@@ -34,7 +34,6 @@ class JenkinsfileShellcheck {
             args = args[0..through_index-1]
         }
         def options = cli.parse(args)
-        println options
 
         if (!options) {
             cli.usage()

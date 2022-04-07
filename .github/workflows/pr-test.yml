@@ -1,0 +1,14 @@
+name: PR test
+on: [pull_request]
+
+jobs:
+  cpplint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: clone
+      uses: actions/checkout@v3
+    - uses: ./
+      with:
+        github_token: ${{ secrets.github_token }}
+        # reporter: github-pr-review
+        reporter: github-pr-check

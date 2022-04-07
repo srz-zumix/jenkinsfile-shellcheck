@@ -1,0 +1,43 @@
+name: 'Run jenkinsfile-shellcheck with reviewdog'
+description: '🐶 Run jenkinsfile-shellcheck with reviewdog on pull requests to lint Jenkinsfile sh script.'
+author: 'srz-zumix'
+inputs:
+  github_token:
+    description: 'GITHUB_TOKEN'
+    default: '${{ github.token }}'
+  shellcheck_flags:
+    description: 'shellcheck flags. (jenkinsfile-shellcheck -- <shellcheck_flags>)'
+    default: ''
+  tool_name:
+    description: 'Tool name to use for reviewdog reporter'
+    default: 'jenkinsfile-shellcheck'
+  exclude:
+    description: 'List of files and folders to exclude'
+    default: ''
+  level:
+    description: 'Report level for reviewdog [info,warning,error]'
+    default: 'error'
+  reporter:
+    description: |
+      Reporter of reviewdog command [github-pr-check,github-pr-review].
+      Default is github-pr-check.
+    default: 'github-pr-check'
+  filter_mode:
+    description: |
+      Filtering mode for the reviewdog command [added,diff_context,file,nofilter].
+      Default is added.
+    default: 'added'
+  fail_on_error:
+    description: |
+      Exit code for reviewdog when errors are found [true,false]
+      Default is `false`.
+    default: 'false'
+  reviewdog_flags:
+    description: 'Additional reviewdog flags'
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'check-circle'
+  color: 'blue'
