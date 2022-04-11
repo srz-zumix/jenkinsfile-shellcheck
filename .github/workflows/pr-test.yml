@@ -2,7 +2,7 @@ name: PR test
 on: [pull_request]
 
 jobs:
-  cpplint:
+  jennkins-shellcheck:
     runs-on: ubuntu-latest
     steps:
     - name: clone

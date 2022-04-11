@@ -15,3 +15,6 @@ test:
 
 docker-build:
 	docker build -t jenkinsfile-shellcheck .
+
+docker-run:
+	docker run --rm -it --entrypoint=bash jenkinsfile-shellcheck
