@@ -19,14 +19,16 @@ echo '::endgroup::'
 
 export REVIEWDOG_GITHUB_API_TOKEN="${INPUT_GITHUB_TOKEN}"
 
-EXCLUDES=""
+
+GIT_EXCLUDES=""
 for exclude_path in $INPUT_EXCLUDE; do
-  EXCLUDES="$EXCLUDES --exclude='!$exclude_path'"
+  GIT_EXCLUDES="$GIT_EXCLUDES --exclude='!$exclude_path'"
 done
 
 echo '::group:: Running jenkinsfile-shellcheck with reviewdog 🐶 ...'
-git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${EXCLUDES} \
-  | xargs -I {} groovy /jenkinsfile-shellchck.groovy -i {} -- ${INPUT_SHELLCHECK_FLAGS} \
+git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES} \
+  | paste -d, -s -
+  | xargs -I {} groovy /jenkinsfile-shellcheck.groovy -i "{}" -- ${INPUT_SHELLCHECK_FLAGS} \
   | reviewdog -efm="%f:%l: %m" \
     -name="${INPUT_TOOL_NAME}" \
     -reporter="${INPUT_REPORTER}" \

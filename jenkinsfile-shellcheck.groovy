@@ -19,7 +19,7 @@ class JenkinsfileShellcheck {
     static void main(String[] args) {
         def cli = new CliBuilder(usage: 'jenkinsfile-shellcheck [options]')
         cli.with {
-            i longOpt:'input', args:1, required:false, argName:'file', defaultValue:'Jenkinsfile', 'input file (default: Jenkinsfile)'
+            i longOpt:'input', args:'+', required:false, argName:'file1,file2,...', valueSeparator:',', defaultValue:'Jenkinsfile', 'input files (default: Jenkinsfile)'
             _ longOpt:'no-expand-gstring', 'do not expand GString values'
             h longOpt: 'help', 'usage information'
         }
@@ -30,7 +30,9 @@ class JenkinsfileShellcheck {
         def through_index = args.findIndexOf { it == '--' }
         def shellcheck_opts = ""
         if( through_index >= 0 ) {
-            shellcheck_opts = args[through_index+1..args.size()-1].join(" ")
+            if( through_index < args.size()-1 ) {
+                shellcheck_opts = args[through_index+1..args.size()-1].join(" ")
+            }
             args = args[0..through_index-1]
         }
         def options = cli.parse(args)
@@ -43,8 +45,10 @@ class JenkinsfileShellcheck {
             cli.usage()
             System.exit(0)
         }
-        def jfs = new JenkinsfileShellcheck(filePath:options.i, noExpandGString:options.'no-expand-gstring')
-        jfs.parse(options.i as File, shellcheck_opts)
+        for( input : options.is ) {
+            def jfs = new JenkinsfileShellcheck(filePath:input, noExpandGString:options.'no-expand-gstring')
+            jfs.parse(input as File, shellcheck_opts)
+        }
     }
 
     static Expression getShellScriptArgument(MethodCallExpression expression) {
