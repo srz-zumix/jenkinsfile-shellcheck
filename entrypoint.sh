@@ -25,6 +25,8 @@ for exclude_path in $INPUT_EXCLUDE; do
   GIT_EXCLUDES="$GIT_EXCLUDES --exclude='!$exclude_path'"
 done
 
+git config --global --add safe.directory "$(pwd)"
+
 echo '::group:: Running jenkinsfile-shellcheck with reviewdog 🐶 ...'
 git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES} \
   | paste -d, -s - \
