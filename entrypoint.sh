@@ -25,8 +25,9 @@ for exclude_path in $INPUT_EXCLUDE; do
   GIT_EXCLUDES="$GIT_EXCLUDES --exclude='!$exclude_path'"
 done
 
-git config core.ignorecase true
 git config --global --add safe.directory "$(pwd)"
+ls -a
+git config core.ignorecase true
 
 git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES}
 
