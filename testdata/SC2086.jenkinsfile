@@ -1,0 +1,15 @@
+#!/usr/bin/env groovy
+
+pipeline {
+    agent any
+    environment {
+        ZIP_FILE_NAME = 'test.zip'
+    }
+    stages {
+        stage('shell') {
+            steps {
+                sh 'zip -r ${ZIP_FILE_NAME} ./'
+            }
+        }
+    }
+}
