@@ -26,18 +26,12 @@ for exclude_path in $INPUT_EXCLUDE; do
 done
 
 git config --global --add safe.directory "$(pwd)"
-ls -a
 git config core.ignorecase true
-
-git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES}
-
-git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES} \
-  | paste -d, -s -
 
 echo '::group:: Running jenkinsfile-shellcheck with reviewdog 🐶 ...'
 git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES} \
   | paste -d, -s - \
-  | xargs -I {} groovy /jenkinsfile-shellcheck.groovy -i "{}" -- ${INPUT_SHELLCHECK_FLAGS} \
+  | xargs -I {} groovy /jenkinsfile-shellcheck.groovy -i "{}" -- -f gcc ${INPUT_SHELLCHECK_FLAGS} \
   | reviewdog -efm="%f:%l: %m" \
     -name="${INPUT_TOOL_NAME}" \
     -reporter="${INPUT_REPORTER}" \
