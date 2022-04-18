@@ -32,7 +32,7 @@ echo '::group:: Running jenkinsfile-shellcheck with reviewdog 🐶 ...'
 git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached ${GIT_EXCLUDES} \
   | paste -d, -s - \
   | xargs -I {} groovy /jenkinsfile-shellcheck.groovy -i "{}" -- -f gcc ${INPUT_SHELLCHECK_FLAGS} \
-  | reviewdog -efm="%f:%l: %m" \
+  | reviewdog -efm="%f:%l:%c: %m" \
     -name="${INPUT_TOOL_NAME}" \
     -reporter="${INPUT_REPORTER}" \
     -filter-mode="${INPUT_FILTER_MODE}" \
