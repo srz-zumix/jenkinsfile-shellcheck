@@ -47,6 +47,7 @@ class JenkinsfileShellcheck {
         }
         for( input : options.is ) {
             def jfs = new JenkinsfileShellcheck(filePath:input, noExpandGString:options.'no-expand-gstring')
+            println(input)
             jfs.parse(input as File, shellcheck_opts)
         }
     }
