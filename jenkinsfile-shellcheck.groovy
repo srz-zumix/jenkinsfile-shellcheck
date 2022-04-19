@@ -12,10 +12,6 @@ class JenkinsfileShellcheck {
     def fileLines
     def noExpandGString
 
-    public @interface Library {
-        String[] value();
-    }
-
     static void main(String[] args) {
         def cli = new CliBuilder(usage: 'jenkinsfile-shellcheck [options]')
         cli.with {
@@ -187,4 +183,8 @@ class JenkinsfileShellcheck {
             node.visit(visitor);
         }
     }
+}
+
+@interface Library {
+    String[] value()
 }
