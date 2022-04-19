@@ -8,3 +8,17 @@ help: ## Display this help screen
 
 run:
 	groovy jenkinsfile-shellcheck.groovy -- -f gcc
+
+test:
+	git ls-files --exclude='*Jenkinsfile*' --exclude='!*.groovy' --ignored --cached | \
+        paste -d , -s - | \
+		xargs -I{} groovy jenkinsfile-shellcheck.groovy -i {} -- -f gcc
+
+docker-build:
+	docker build -t jenkinsfile-shellcheck .
+
+docker-run:
+	docker run --rm -it -w /work -v "${PWD}:/work" jenkinsfile-shellcheck
+
+docker-login:
+	docker run --rm -it -w /work -v "${PWD}:/work" --entrypoint=bash jenkinsfile-shellcheck
