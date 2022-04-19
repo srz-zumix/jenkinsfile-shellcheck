@@ -12,5 +12,5 @@ jobs:
         github_token: ${{ secrets.github_token }}
         # reporter: github-pr-review
         reporter: github-pr-check
-        shellcheck_flags: "--exclude SC2086"
+        # shellcheck_flags: "--exclude SC2086"
         reviewdog_flags: -tee
