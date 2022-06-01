@@ -68,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: srz-zumix/jenkinsfile-shellcheck@main
+    - uses: srz-zumix/jenkinsfile-shellcheck@v1
       with:
         github_token: ${{ secrets.github_token }}
         reporter: github-pr-review
